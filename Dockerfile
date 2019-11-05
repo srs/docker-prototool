@@ -4,6 +4,7 @@ ARG PROTOTOOL_VERSION=1.9.0
 ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.24.1
 ARG GOLANG_PROTOBUF_VERSION=1.3.2
 ARG GOGO_PROTOBUF_VERSION=1.3.1
+ARG GRPC_GATEWAY_VERSION=1.12.0
 
 RUN apk --no-cache add --update curl git libc6-compat make upx
 
@@ -24,6 +25,15 @@ RUN go get -d github.com/gogo/protobuf/gogoproto && \
   mkdir -p /usr/include/gogoproto && \
   mv /go/src/github.com/gogo/protobuf/gogoproto/gogo.proto /usr/include/gogoproto/gogo.proto
 
+RUN curl -sSL \
+  https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v${GRPC_GATEWAY_VERSION}/protoc-gen-grpc-gateway-v${GRPC_GATEWAY_VERSION}-linux-x86_64 \
+  -o /usr/local/bin/protoc-gen-grpc-gateway && \
+  curl -sSL \
+  https://github.com/grpc-ecosystem/grpc-gateway/releases/download/v${GRPC_GATEWAY_VERSION}/protoc-gen-swagger-v${GRPC_GATEWAY_VERSION}-linux-x86_64 \
+  -o /usr/local/bin/protoc-gen-swagger && \
+  chmod +x /usr/local/bin/protoc-gen-grpc-gateway && \
+  chmod +x /usr/local/bin/protoc-gen-swagger
+  
 RUN curl -sSL https://search.maven.org/remotecontent?filepath=io/grpc/protoc-gen-grpc-java/$PROTOC_GEN_JAVA_GRPC_VERSION/protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe -o /usr/local/bin/protoc-gen-grpc-java && \
   chmod +x /usr/local/bin/protoc-gen-grpc-java
 
