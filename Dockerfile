@@ -5,6 +5,7 @@ ARG PROTOC_GEN_JAVA_GRPC_VERSION=1.24.1
 ARG GOLANG_PROTOBUF_VERSION=1.3.2
 ARG GOGO_PROTOBUF_VERSION=1.3.1
 ARG GRPC_GATEWAY_VERSION=1.12.0
+ARG PROTOC_GEN_JAVALITE_VERSION=3.0.0
 
 RUN apk --no-cache add --update curl git libc6-compat make upx
 
@@ -36,6 +37,9 @@ RUN curl -sSL \
   
 RUN curl -sSL https://search.maven.org/remotecontent?filepath=io/grpc/protoc-gen-grpc-java/$PROTOC_GEN_JAVA_GRPC_VERSION/protoc-gen-grpc-java-$PROTOC_GEN_JAVA_GRPC_VERSION-linux-x86_64.exe -o /usr/local/bin/protoc-gen-grpc-java && \
   chmod +x /usr/local/bin/protoc-gen-grpc-java
+
+RUN curl -sSL https://search.maven.org/remotecontent?filepath=com/google/protobuf/protoc-gen-javalite/$PROTOC_GEN_JAVALITE_VERSION/protoc-gen-javalite-$PROTOC_GEN_JAVALITE_VERSION-linux-x86_64.exe -o /usr/local/bin/protoc-gen-javalite && \
+  chmod +x /usr/local/bin/protoc-gen-javalite
 
 RUN upx --lzma /usr/local/bin/*
 
