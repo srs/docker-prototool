@@ -22,6 +22,10 @@ RUN GO111MODULE=on go get \
   github.com/gogo/protobuf/protoc-gen-gogoslick@v${GOGO_PROTOBUF_VERSION} && \
   mv /go/bin/protoc-gen-go* /usr/local/bin/ 
 
+RUN GO111MODULE=on go get \
+  github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc && \
+  mv /go/bin/protoc-gen-doc /usr/local/bin/
+
 RUN go get -d github.com/gogo/protobuf/gogoproto && \
   mkdir -p /usr/include/gogoproto && \
   mv /go/src/github.com/gogo/protobuf/gogoproto/gogo.proto /usr/include/gogoproto/gogo.proto
